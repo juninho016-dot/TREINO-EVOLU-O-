@@ -1,4 +1,4 @@
-const CACHE_NAME='projeto-evolucao-v14';
+const CACHE_NAME='projeto-evolucao-v15';
 const APP_SHELL=['./','./index.html','./manifest.webmanifest'];
 
 self.addEventListener('install',event=>{
