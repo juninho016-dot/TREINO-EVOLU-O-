@@ -17,7 +17,8 @@ const plans=[{"day":"SEG","label":"Segunda","title":"Peito + Tríceps — Treino
 let selected=0, db;const DB='ProjetoEvolucaoDB',STORE='videos';
 function openDB(){return new Promise((resolve,reject)=>{if(!('indexedDB' in window)){reject(new Error('IndexedDB indisponível'));return}let q=indexedDB.open(DB,1);q.onupgradeneeded=()=>{if(!q.result.objectStoreNames.contains(STORE))q.result.createObjectStore(STORE)};q.onsuccess=()=>{db=q.result;db.onversionchange=()=>db.close();resolve()};q.onerror=()=>reject(q.error);q.onblocked=()=>reject(new Error('Banco local bloqueado'))})}
 function videoKey(day,group,index){return `${day}-${group}-${index}`}
-function currentWeekKey(){const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7));return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}\nfunction doneKey(key){return `done-${currentWeekKey()}-${key}`}
+function currentWeekKey(){const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7));return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function doneKey(key){return `done-${currentWeekKey()}-${key}`}
 function getVideo(key){return new Promise(resolve=>{if(!db){resolve(null);return}try{let q=db.transaction(STORE).objectStore(STORE).get(key);q.onsuccess=()=>resolve(q.result||null);q.onerror=()=>resolve(null)}catch(e){resolve(null)}})}
 function putVideo(key,file){return new Promise((resolve,reject)=>{let q=db.transaction(STORE,'readwrite').objectStore(STORE).put(file,key);q.onsuccess=resolve;q.onerror=()=>reject(q.error)})}
 function delVideo(key){return new Promise(resolve=>{let q=db.transaction(STORE,'readwrite').objectStore(STORE).delete(key);q.onsuccess=resolve})}
