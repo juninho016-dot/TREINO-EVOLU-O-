@@ -19,7 +19,8 @@ function openDB(){return new Promise((resolve,reject)=>{if(!('indexedDB' in wind
 function videoKey(day,group,index){return `${day}-${group}-${index}`}
 function currentWeekKey(){const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-((d.getDay()+1)%7));return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`} 
 function todayPlanIndex(){const day=new Date().getDay();return day>=1&&day<=5?day-1:0}
-function dayDoneKey(i){return `day-done-${currentWeekKey()}-${plans[i].day}`}\nfunction visiblePlanIndexes(){const today=todayPlanIndex();return plans.map((p,i)=>i).filter(i=>i>=today&&localStorage.getItem(dayDoneKey(i))!=='1'&&!(i===today&&isDayComplete(i)))}
+function dayDoneKey(i){return `day-done-${currentWeekKey()}-${plans[i].day}`}
+function visiblePlanIndexes(){const today=todayPlanIndex();return plans.map((p,i)=>i).filter(i=>i>=today&&localStorage.getItem(dayDoneKey(i))!=='1'&&!(i===today&&isDayComplete(i)))}
 function doneKey(key){return `done-${currentWeekKey()}-${key}`}
 function getVideo(key){return new Promise(resolve=>{if(!db){resolve(null);return}try{let q=db.transaction(STORE).objectStore(STORE).get(key);q.onsuccess=()=>resolve(q.result||null);q.onerror=()=>resolve(null)}catch(e){resolve(null)}})}
 function putVideo(key,file){return new Promise((resolve,reject)=>{let q=db.transaction(STORE,'readwrite').objectStore(STORE).put(file,key);q.onsuccess=resolve;q.onerror=()=>reject(q.error)})}
