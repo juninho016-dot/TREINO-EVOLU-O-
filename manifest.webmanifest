@@ -1,10 +1,10 @@
 {
-  "name": "Projeto Evolução — Treino Raiz",
-  "short_name": "Evolução",
+  "name": "Modo Psicopata — Projeto Evolução",
+  "short_name": "Modo Psico",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#101010",
-  "theme_color": "#111111",
+  "background_color": "#08090b",
+  "theme_color": "#10090c",
   "lang": "pt-BR"
 }
